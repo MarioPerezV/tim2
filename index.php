@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<?php require 'plantillas/head.php'; ?>
+</head>
+<body>
+<header>
+<?php require 'plantillas/navbar.php'; ?>
+</header>
 <?php //Version(10-11)  Mario Perez Vilchez - API 2 - ProgAppWeb
 $nombre = $edad = $interesado = "";
     // Verifica si el formulario fue enviado mediante POST
@@ -5,9 +14,9 @@ function solicitar_datos_usuario() {
     global $nombre, $edad, $interesado;
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recoger los datos del formulario
-    $nombre = $_POST['nombre'];
-    $edad = $_POST['edad'];
-    $interesado = isset($_POST['interesado']) ? 'Sí' : 'No';  // Verifica si el checkbox fue marcado
+        $nombre = htmlspecialchars($_POST['nombre']);
+        $edad = $_POST['edad'];
+        $interesado = isset($_POST['interesado']) ? 'Sí' : 'No';  // Verifica si el checkbox fue marcado
     }
 }
 // Las 5 imágenes
@@ -66,53 +75,6 @@ $carrusel='<div class="container text-center my-3">
                 </a>
             </div>
         </div>';?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="shortcut icon" href="img/ecoma.ico" />
-    <title>MarioPerezV_TIM2_ProgramacionAppWeb</title>
-    <link rel="stylesheet" href="estilos.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-<header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-        <div class="container-fluid">
-            <img src="img/logo.png" class="rounded" alt="Logo club ajedrez" width="40">
-            <a class="navbar-brand" href="#">Club de Ajedrez<br> Gambito de Capablanca</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="index.php">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="cuento.php">Cuento</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="fibo.php">Fibonacci</a>
-                    </li>
-                    <li class="nav-item dropdown"> <!--ahora el Dropdown si me funciona tenía repetido un script de JS -->
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Opciones</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Cadetes</a></li>
-                            <li><a class="dropdown-item" href="#">Capitanes</a></li>
-                            <li><a class="dropdown-item" href="#">Solo Maestros</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true">Inhabilitado</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
     <div class="container my-5 py-5">
         <div class="row">
             <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 bg-primary my-3 py-3" style="color: #ffffff;"> <!-- py=padding(margen interno) en eje y (vertical) -->
@@ -120,11 +82,11 @@ $carrusel='<div class="container text-center my-3">
                 <form method="POST" action=""><!-- Se mantiene la información en la misma página -->
                     <div class="py-2">
                         <label for="nombre" class="form-label">Nombre y apellido</label>
-                        <input type="text" class="form-control" id="nombre" rows="1" name="nombre" placeholder="Nombre">
+                        <input type="text" class="form-control" id="nombre" rows="1" name="nombre" placeholder="Nombre" required>
                     </div>
                     <div class="py-2">
                         <label for="edad" class="form-label">Edad</label>
-                        <input type="number" class="form-control" id="edad" name="edad" placeholder="Edad">
+                        <input type="number" class="form-control" id="edad" name="edad" min="1" max="99" placeholder="Edad" required>
                     </div>
                     <div class="py-2">
                         <label for="interesado">¿Interesado en información adicional?</label>
@@ -139,9 +101,9 @@ $carrusel='<div class="container text-center my-3">
             <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 bg-light my-3 p-3" style="color: blue;">
                 <div class="container text-center">
                     <img src="img/club.jpeg" alt="Logo club" width="300">
-                    <h2 class="text-center">Bienvenid@s al Club <?php echo $nombre; ?></h2>
+                    <h2 class="text-center">Bienvenid@ al Club <?php echo $nombre; ?></h2> <!-- No me funciona el echo que está dentro de la etiqueta h2-->
                     <?php // Llamada a la función para procesar el formulario 
-                        $solicitud = solicitar_datos_usuario();// No sé cuál es el error, me aparece subrayado amarillo la función, 
+                        $solicitud = solicitar_datos_usuario();// No sé cuál es el error, aunque funciona igual, me aparece subrayado amarillo la función, 
 // lo hice sin función y me resultó más facil, pero lo dejo con función para cumplir con la consigna aunque me resulte más complejo
                     // if ($_SERVER["REQUEST_METHOD"] == "POST") {  Eliminado
                             // Se muestran los datos recibidos por el formulario
@@ -183,22 +145,4 @@ $carrusel='<div class="container text-center my-3">
             </div>
         </div> 
     </div>
-<script async src="https://cdn.jsdelivr.net/npm/es-module-shims@1/dist/es-module-shims.min.js" crossorigin="anonymous"></script>
-<script type="importmap">
-{
-    "imports": {
-        "@popperjs/core": "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/esm/popper.min.js",
-        "bootstrap": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.esm.min.js"
-    }
-}
-</script>
-<script type="module">
-    import * as bootstrap from 'bootstrap'
-    new bootstrap.Popover(document.getElementById('popoverButton'))
-</script>
-</body>
-<footer class="text-center mt-5 bg-primary">    
-    <h5>Mario Alejandro Pérez Vilchez <br>Servicios Informaticos Ecoma Ltda<br>Todos los derechos reservados 2024</h5>
-    <!-- SE DEJA COMENTADA ESTA LINEA JS POR REDUNDANCIA EN LA PÁGINA: <script src="scripts.js"></script>-->
-</footer>
-</html>
+<?php require 'plantillas/footer.php'; ?>
